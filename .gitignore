@@ -23,7 +23,3 @@ yarn-debug.log*
 yarn-error.log*
 testsprite_tests/tmp/
 testsprite_tests/tmp/config.json
-
-# local editor / assistant tooling
-.claude/
-CLAUDE.md
