@@ -29,9 +29,11 @@ export function Toggle({ label, checked, onChange, icon: Icon }: ToggleProps) {
           checked ? "bg-brand" : "bg-slate-300"
         }`}
       >
+        {/* Anchored left and vertically centred, so the travel distance is
+            measured from the pill's edge rather than an unset static origin. */}
         <span
-          className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${
-            checked ? "translate-x-4" : "translate-x-0.5"
+          className={`pointer-events-none absolute left-0.5 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-white shadow transition-transform ${
+            checked ? "translate-x-4" : "translate-x-0"
           }`}
         />
       </button>
