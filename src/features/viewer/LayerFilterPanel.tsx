@@ -1,20 +1,34 @@
 import React from "react";
-import { Cpu, Eye, EyeOff, Plug, RefreshCw, Settings, Zap } from "lucide-react";
+import {
+  Cpu,
+  Eye,
+  EyeOff,
+  Plug,
+  RefreshCw,
+  Settings,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 import { Card } from "../../components/UI/Card";
 import { Toggle } from "../../components/UI/Toggle";
 import { useFilters } from "../../store/useViewer";
 import type { ViewerFilters } from "../../store/ViewerContext";
 
-const SIDE_TOGGLES: { key: keyof ViewerFilters; label: string }[] = [
-  { key: "topSide", label: "Top Side" },
-  { key: "bottomSide", label: "Bottom Side" },
-];
-
-const CATEGORY_TOGGLES: {
+interface ToggleSpec {
   key: keyof ViewerFilters;
   label: string;
-  icon: typeof Cpu;
-}[] = [
+  /** side toggles show an eye that reflects state; categories show a fixed icon */
+  icon?: LucideIcon;
+}
+
+/**
+ * Ordered to fill a three-row grid column-first, so the two columns line up:
+ * Top Side / Bottom Side / ICs on the left, the remaining categories on the
+ * right. Splitting them into separate lists left the rows ragged.
+ */
+const TOGGLES: ToggleSpec[] = [
+  { key: "topSide", label: "Top Side" },
+  { key: "bottomSide", label: "Bottom Side" },
   { key: "ics", label: "ICs", icon: Cpu },
   { key: "passives", label: "Passives", icon: Zap },
   { key: "connectors", label: "Connectors", icon: Plug },
@@ -39,29 +53,17 @@ export function LayerFilterPanel() {
         </button>
       }
     >
-      <div className="grid gap-x-6 sm:grid-cols-2">
-        <div>
-          {SIDE_TOGGLES.map(({ key, label }) => (
-            <Toggle
-              key={key}
-              label={label}
-              icon={filters[key] ? Eye : EyeOff}
-              checked={filters[key]}
-              onChange={() => toggleFilter(key)}
-            />
-          ))}
-        </div>
-        <div>
-          {CATEGORY_TOGGLES.map(({ key, label, icon }) => (
-            <Toggle
-              key={key}
-              label={label}
-              icon={icon}
-              checked={filters[key]}
-              onChange={() => toggleFilter(key)}
-            />
-          ))}
-        </div>
+      {/* One column on narrow cards; two columns of three rows from sm up. */}
+      <div className="grid gap-x-8 sm:grid-flow-col sm:grid-rows-3">
+        {TOGGLES.map(({ key, label, icon }) => (
+          <Toggle
+            key={key}
+            label={label}
+            icon={icon ?? (filters[key] ? Eye : EyeOff)}
+            checked={filters[key]}
+            onChange={() => toggleFilter(key)}
+          />
+        ))}
       </div>
     </Card>
   );
