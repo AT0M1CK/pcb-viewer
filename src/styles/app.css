@@ -1,0 +1,45 @@
+/**
+ * Rules Tailwind utilities can't express: scrollbar theming inside the dark
+ * sidebar, and cursor feedback over the WebGL canvas (which has no DOM
+ * children to hang a hover state on).
+ */
+
+/* Slim scrollbar for the sidebar's dark ground. */
+.scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: #2b3d57 transparent;
+}
+
+.scrollbar-slim::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-slim::-webkit-scrollbar-thumb {
+  background-color: #2b3d57;
+  border-radius: 3px;
+}
+
+/* r3f sets pointer events on the canvas itself; this reflects mesh hover. */
+.canvas-hovering canvas {
+  cursor: pointer;
+}
+
+.canvas-idle canvas {
+  cursor: grab;
+}
+
+.canvas-idle canvas:active {
+  cursor: grabbing;
+}
+
+/* Respect users who'd rather not see the camera glide between presets. */
+@media (prefers-reduced-motion: reduce) {
+  .drawer-transition {
+    transition: none !important;
+  }
+}

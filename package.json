@@ -13,13 +13,13 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
+    "lucide-react": "^1.37.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-scripts": "5.0.1",
     "three": "^0.185.1",
     "typescript": "^5.1.6",
-    "web-vitals": "^2.1.4",
-    "zustand": "^5.0.15"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
