@@ -26,8 +26,14 @@ export function ViewerPage() {
     <div className="flex flex-col gap-4">
       <PageHeader />
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="relative h-[50vh] min-h-[320px] overflow-hidden rounded-xl border border-line bg-white lg:col-span-2 lg:h-[58vh]">
+      {/* grid-cols-1 is load-bearing, not decoration: without an explicit
+          template the single mobile column is `auto`-sized, so its floor is the
+          items' min-content and any wide child (the issues table) widens the
+          whole page. `grid-cols-1` compiles to minmax(0, 1fr), floor 0. */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        {/* min-h clears the ~328px vertical toolbar plus its 12px insets, so
+            the rail is never clipped by the overflow-hidden on short screens. */}
+        <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-xl border border-line bg-white lg:col-span-2 lg:h-[58vh]">
           <div className="absolute left-3 top-3 z-10 hidden sm:block">
             <Dropdown
               label={board.file}
@@ -46,7 +52,7 @@ export function ViewerPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         <PlacementSummaryCard summary={board.summary} />
         <LayerFilterPanel />
         <div className="md:col-span-2 xl:col-span-1">
